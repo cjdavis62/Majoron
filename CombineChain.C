@@ -1,4 +1,3 @@
-
 #include "TROOT.h"
 #include "TTree.h"
 #include "TSystem.h"
@@ -68,17 +67,19 @@ TH1F event_collection(TTree *tree) {
       }
 
   }
-  ESum_hist->Scale(1/ESum_hist->GetEntries());
+  double bin_width = ESum_hist->GetBinCenter(10) - ESum_hist->GetBinCenter(9);
+  
+  ESum_hist->Scale(1.0 / (bin_width*ESum_hist->GetEntries()));
   return *ESum_hist;
 }
 
 int foo() {
 
-  TFile * f1_n1 = new TFile("/projects/cuore/simulation/Majoron/Majoron_n1.root");
-  TFile * f2_n2 = new TFile("/projects/cuore/simulation/Majoron/Majoron_n2.root");
-  TFile * f3_n3 = new TFile("/projects/cuore/simulation/Majoron/Majoron_n3.root");
-  TFile * f4_n5 = new TFile("/projects/cuore/simulation/Majoron/Majoron_n5.root");
-  TFile * f5_n7 = new TFile("/projects/cuore/simulation/Majoron/Majoron_n7.root");
+  TFile * f1_n1 = new TFile("/projects/cuore/simulation/Majoron/v2/Majoron_n1.root");
+  TFile * f2_n2 = new TFile("/projects/cuore/simulation/Majoron/v2/Majoron_n2.root");
+  TFile * f3_n3 = new TFile("/projects/cuore/simulation/Majoron/v2/Majoron_n3.root");
+  TFile * f4_n5 = new TFile("/projects/cuore/simulation/Majoron/v2/Majoron_n5.root");
+  TFile * f5_n7 = new TFile("/projects/cuore/simulation/Majoron/v2/Majoron_n7.root");
 
   TTree * tree_n1 = (TTree*)f1_n1->Get("qtree");
   TTree * tree_n2 = (TTree*)f2_n2->Get("qtree");
@@ -126,7 +127,7 @@ int foo() {
   legend->AddEntry(ESum_hist_n1, "Spectral Index 1", "l");
   legend->AddEntry(ESum_hist_n2, "Spectral Index 2", "l");
   legend->AddEntry(ESum_hist_n3, "Spectral Index 3", "l");
-  legend->AddEntry(ESum_hist_n5, "Spectral Index 5", "l");
+  legend->AddEntry(ESum_hist_n5, "Spectral Index 5 (2#nu#beta#beta)", "l");
   legend->AddEntry(ESum_hist_n7, "Spectral Index 7", "l");
 
   legend->Draw();
