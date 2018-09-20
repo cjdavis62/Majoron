@@ -1,3 +1,7 @@
+// This script takes as input the list of files in ListMC.txt in this directory
+// It then takes the files and adds a DS flag to them based on the livetimes of each dataset
+// It also adds in an Included flag based on whether or not that channel was included in the dataset
+
 #include <fstream>
 #include <sstream>
 #include <string>

@@ -1,3 +1,5 @@
+// This script takes in a reduced data file and creates a new file with 10% of the data of the original
+
 #include "TROOT.h"
 #include "TSystem.h"
 #include "TMath.h"
@@ -70,14 +72,23 @@ void frac_reduce() {
   outTree->Branch("Floor", &Floor, "Floor/I");
 
   outTree->SetAlias("Ener2", "Energy");
-
+  outTree->SetAlias("ESum2", "TotalEnergy");
+  
   int seed = 1000;
 
   TRandom3 * random = new TRandom3(seed);
 
+  int percent_previous = -1;
   for (int i = 0; i < inpTree->GetEntries(); i++) {
     inpTree->GetEntry(i);
 
+    int percent = std::floor(((double)i * 100.0) / inpTree->GetEntries());
+    if ( percent > percent_previous)
+      {
+	std::cout << "Entries read: " << percent << "%" << "\r" << std::flush;
+	percent_previous = percent;
+      }
+    
     int j = random->Integer(10);
     if (j == 0) // take 10 percent of the values
     {

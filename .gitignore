@@ -2,3 +2,5 @@
 *.d
 *.so
 10percentPass/*
+*.pdf
+*.png

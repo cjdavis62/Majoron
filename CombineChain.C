@@ -1,3 +1,7 @@
+// This script takes in the unprocessed MC file to determine the summed energy spectrum of each of the Majoron spectral indices
+// In order to only consider the summed electron spectrum, only events with 2 events in the chain are considered
+
+
 #include "TROOT.h"
 #include "TTree.h"
 #include "TSystem.h"
@@ -122,6 +126,8 @@ int foo() {
   ESum_hist_n5->SetLineColor(kCyan);
   ESum_hist_n5->Draw("Same");
 
+  ESum_hist_n7->GetXaxis()->SetTitle("Energy [MeV]");
+  ESum_hist_n7->GetYaxis()->SetTitle("Rate [Arbitrary Units]");
 
   TLegend *legend = new TLegend(0.65, 0.70, 0.88, 0.88);
   legend->AddEntry(ESum_hist_n1, "Spectral Index 1", "l");
