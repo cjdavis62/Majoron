@@ -126,7 +126,7 @@ int foo() {
   ESum_hist_n5->SetLineColor(kCyan);
   ESum_hist_n5->Draw("Same");
 
-  ESum_hist_n7->GetXaxis()->SetTitle("Energy [MeV]");
+  ESum_hist_n7->GetXaxis()->SetTitle("Summed Electron Energy [MeV]");
   ESum_hist_n7->GetYaxis()->SetTitle("Rate [Arbitrary Units]");
 
   TLegend *legend = new TLegend(0.65, 0.70, 0.88, 0.88);
