@@ -24,3 +24,6 @@ This is the set of codes for editing and plotting files for a Majoron search. Th
 * By floor (even/odd)
 * Fit by layer (M1L1, M1L0)
 * No M2sum??
+
+# Sort of a systematic?
+* Kinematically forbidden simulations (n6 and n4)
