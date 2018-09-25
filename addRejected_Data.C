@@ -49,7 +49,7 @@ void addRejected() {
     int dataset;
     int run;
 
-    TString fileName = "Data/Reduced_bkg_3018_3021_10percent.root";
+    TString fileName = "/nfs/cuore1/scratch/cjdavis/ThesisJAGS/Data/Reduced_bkg_3018_3021.root";                                           
 
     TFile* dataFile = new TFile(fileName, "update");
     TTree* dataTree = (TTree*) dataFile->Get("outTree");
@@ -69,10 +69,13 @@ void addRejected() {
     friendTree->Branch("Dataset", &dataset, "Dataset/I");
     friendTree->Branch("Included", &included, "Included/O");
 
+    double percent;
+    double percent_previous = -1;
+    
     for(Long64_t e = 0; e < dataTree->GetEntries(); e++) {
         dataTree->GetEntry(e);
 
-	percent = std::floor(((double)i * 100.0) / dataTree->GetEntries());
+	percent = std::floor(((double)e * 100.0) / dataTree->GetEntries());
 	if ( percent > percent_previous)
 	  {
 	    std::cout << "Entries read: " << percent << "%" << "\r" << std::flush;
