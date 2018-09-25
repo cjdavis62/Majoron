@@ -72,6 +72,13 @@ void addRejected() {
     for(Long64_t e = 0; e < dataTree->GetEntries(); e++) {
         dataTree->GetEntry(e);
 
+	percent = std::floor(((double)i * 100.0) / dataTree->GetEntries());
+	if ( percent > percent_previous)
+	  {
+	    std::cout << "Entries read: " << percent << "%" << "\r" << std::flush;
+	    percent_previous = percent;
+	  }
+	
         if( run < 320000 )
             dataset = 3021;
         else
