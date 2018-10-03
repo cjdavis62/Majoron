@@ -39,9 +39,10 @@ def calculate_halflife(exposure, nchains, normalization):
     navogadro=6.022140857 * pow(10,23) # Avogadro's number
     isotopicAbundance = 0.34 # isotopic abundance as a %
     molarMassTe130 = 0.130 # molar mass in kg
+    molarMassO2 = 0.032
 
     # do all the math as logs to save precision
-    halflife_log = math.log(math.log(2)) + math.log(exposure) + math.log(navogadro) + math.log(isotopicAbundance) - (math.log(molarMassTe130) + math.log(nchains) + math.log(normalization))
+    halflife_log = math.log(math.log(2)) + math.log(exposure) + math.log(navogadro) + math.log(isotopicAbundance) - (math.log(molarMassTe130 + molarMassO2) + math.log(nchains) + math.log(normalization))
 
     
     halflife = math.exp(halflife_log) # unlog the halflife
