@@ -21,6 +21,7 @@ def get_arguments():
     parser.add_argument("-E", "--exposure", type=float, help="The exposure in kilogram-years with the mass as the mass of Te (not Te130)")
     parser.add_argument("-N", "--normalization", type=float, help="The normalization constant from JAGS")
     parser.add_argument("-C", "--nchains", type=float, help="The number of chains generated in the MC")
+    parser.add_argument("-n", "--spectralindex", type=int, help="The spectral index (used for calculation of the coupling constants")
 
     args = parser.parse_args()
 
@@ -28,10 +29,10 @@ def get_arguments():
         print("Need to include all arguments")
         sys.exit(1)
 
-    if (args.exposure <= 0 or args.normalization <= 0 or args.nchains <=0):
+    if (args.exposure <= 0 or args.normalization <= 0 or args.nchains <=0 or args.spectralindex <=0):
         print("Need all arguments positive and nonzero")
         sys.exit(1)
-        
+
     return args
 
 # calculation of the half-life
@@ -50,7 +51,13 @@ def calculate_halflife(exposure, nchains, normalization):
     halflife = math.exp(halflife_log) # unlog the halflife
 
     return halflife
-    
+
+# calculate coupling constant based on half-life
+def calculate_coupling(spectral_index, halflife):
+    PhaseSpaceFactor = 0
+    NuclearMatrixElements = [0, 0, 0, 0]
+
+# main function
 arguments = get_arguments()
 
 halflife = calculate_halflife(arguments.exposure, arguments.nchains, arguments.normalization)

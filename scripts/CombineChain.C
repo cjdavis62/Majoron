@@ -42,22 +42,23 @@ TH1F event_collection(TTree *tree) {
   for (int i = 0; i < tree->GetEntries(); i++) {
     tree->GetEntry(i);
 
-    percent = std::floor(((double)i * 100.0) / tree->GetEntries());
+    // Output what percent of file is read through
+    percent = std::floor(((double)i * 1000) / tree->GetEntries());
     if ( percent > percent_previous)
       {
-	std::cout << "Entries read: " << percent << "%" << "\r" << std::flush;
+	std::cout << "Entries read: " << percent/10.0 << "%" << "\r" << std::flush;
 	percent_previous = percent;
       }
-    
+
+    // Sum energies if particles are in the same chain
     if ((int)Chain_Number == Chain_Previous)
       {
 	Events_in_Chain++;
 	Energy_Sum += Energy;
-	//std::cout << "Events: " << Events_in_Chain << " Energy: " << Energy << std::endl;
-	//ESum_hist->Fill(Energy_Sum);
       }
     else
       {
+	// End once if  particles in the chain
 	if (Events_in_Chain == 2) ESum_hist->Fill(Energy_Sum);
 	
 	Events_in_Chain = 1; // reset number of events in the chain
@@ -65,12 +66,10 @@ TH1F event_collection(TTree *tree) {
 	Energy_Sum = Energy; //first of the two electrons
       }
 
-    if (Events_in_Chain > 2)
-      {
-	//std::cout << "Number of events in the chain: " <<  Events_in_Chain << std::endl;
-      }
 
   }
+  // Add an extra line to close off the std::flush from earlier
+  std::cout << std::endl;
   double bin_width = ESum_hist->GetBinCenter(10) - ESum_hist->GetBinCenter(9);
   
   ESum_hist->Scale(1.0 / (bin_width*ESum_hist->GetEntries()));
@@ -130,11 +129,11 @@ int foo() {
   ESum_hist_n7->GetYaxis()->SetTitle("Rate [Arbitrary Units]");
 
   TLegend *legend = new TLegend(0.65, 0.70, 0.88, 0.88);
-  legend->AddEntry(ESum_hist_n1, "Spectral Index 1", "l");
-  legend->AddEntry(ESum_hist_n2, "Spectral Index 2", "l");
-  legend->AddEntry(ESum_hist_n3, "Spectral Index 3", "l");
+  legend->AddEntry(ESum_hist_n1, "Spectral Index 1 (0#nu#beta#beta#chi)", "l");
+  legend->AddEntry(ESum_hist_n2, "Spectral Index 2 (0#nu#beta#beta#chi)", "l");
+  legend->AddEntry(ESum_hist_n3, "Spectral Index 3 (0#nu#beta#beta#chi(#chi))", "l");
   legend->AddEntry(ESum_hist_n5, "Spectral Index 5 (2#nu#beta#beta)", "l");
-  legend->AddEntry(ESum_hist_n7, "Spectral Index 7", "l");
+  legend->AddEntry(ESum_hist_n7, "Spectral Index 7 (0#nu#beta#beta#chi#chi)", "l");
 
   legend->Draw();
 
