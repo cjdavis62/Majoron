@@ -88,7 +88,6 @@ void frac_reduce() {
 	std::cout << "Entries read: " << percent << "%" << "\r" << std::flush;
 	percent_previous = percent;
       }
-    std::cout <<"\n" << std::endl;
     
     int j = random->Integer(2);
     if (j == 0) // take 50 percent of the values
@@ -98,8 +97,9 @@ void frac_reduce() {
       outTree->Fill();
       // write the outTree
     }
-    
+
   }
+  std::cout <<"\n" << std::endl;
 
     outTree->Write();
     outFile->Close();
