@@ -1,5 +1,0 @@
-Majoron_n1_g4cuore.root
-Majoron_n2_g4cuore.root
-Majoron_n3_g4cuore.root
-Majoron_n5_g4cuore.root
-Majoron_n7_g4cuore.root
