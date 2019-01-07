@@ -4,3 +4,11 @@
 10percentPass/*
 *.pdf
 *.png
+CombineChain
+addRejected
+2nuCheck/*
+n1Check/*
+ulite_10percentRun/*
+ulite_50percentRun/*
+b2g-Reduced_bkg_3018_3021_50percent.root
+sensitivity/GeneratorScripts/*
