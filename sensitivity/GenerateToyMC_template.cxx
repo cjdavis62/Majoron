@@ -57,34 +57,35 @@ void GenerateToyMC(){
   int Dataset;
   bool Included;
 
-  MC_tree->SetBranchAddress("Channel", &Channel);
-  MC_tree->SetBranchAddress("Detector", &Detector);
+  //MC_tree->SetBranchAddress("Channel", &Channel);
+  //MC_tree->SetBranchAddress("Detector", &Detector);
   MC_tree->SetBranchAddress("Ener2", &Ener2);
   MC_tree->SetBranchAddress("ESum2", &ESum2);
   MC_tree->SetBranchAddress("Multiplicity", &Multiplicity);
   MC_tree->SetBranchAddress("Layer", &Layer);
-  MC_tree->SetBranchAddress("Tower", &Tower);
-  MC_tree->SetBranchAddress("Floor", &Floor);
+  //MC_tree->SetBranchAddress("Tower", &Tower);
+  //MC_tree->SetBranchAddress("Floor", &Floor);
 
   MC_friend_tree->SetBranchAddress("Dataset", &Dataset);
   MC_friend_tree->SetBranchAddress("Included", &Included);
 
   
-  outTree->Branch("Channel", &Channel, "Channel/I");
-  outTree->Branch("Detector", &Detector, "Detector/I");
+  //outTree->Branch("Channel", &Channel, "Channel/I");
+  //outTree->Branch("Detector", &Detector, "Detector/I");
   outTree->Branch("Ener2", &Ener2, "Ener2/D");
   outTree->Branch("ESum2", &ESum2, "ESum2/D");
   outTree->Branch("Multiplicity", &Multiplicity, "Multiplicity/S");
   outTree->Branch("Layer", &Layer, "Layer/I");
-  outTree->Branch("Tower", &Tower, "Tower/I");
-  outTree->Branch("Floor", &Floor, "Floor/I");
+  //outTree->Branch("Tower", &Tower, "Tower/I");
+  //outTree->Branch("Floor", &Floor, "Floor/I");
 
   friendTree->Branch("Dataset", &Dataset, "Dataset/I");
   friendTree->Branch("Included", &Included, "Included/O");
 
   // Start random number generator
   TRandom3 *rand = new TRandom3();
-  
+  rand->SetSeed();
+
   // Sample events from the histogram
   for (int i = 0; i < sampled_events; i++) {
     int event_to_sample = rand->Integer(sampled_events);
