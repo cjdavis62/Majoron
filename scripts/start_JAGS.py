@@ -51,15 +51,28 @@ def PrepareData_script_gen(data_path, data_name, mc_path, multiplicities, system
     
     # Add each of the multiplicities
     Multiplicities_output = ""
-    print(multiplicities)
+    #print(multiplicities)
     while (len(multiplicities) != 0):
         Multiplicities_output = Multiplicities_output + multiplicities.pop(0) + "_" + systematic + " "
     PrepareData_script = PrepareData_start + Multiplicities_output
 
     return PrepareData_script
 
+def Back2ground_script_gen(data_path, data_name, multiplicities, systematic):
+
+    # Start the back2ground script
+    Back2ground_start = "back2ground_nopress {data_path}/{data_name} ListMC_opt.txt".format(data_path=data_path, data_name=data_name)
+
+    # Add each of the multiplicities for SpectraM*_systematic
+    Multiplicities_output = ""
+    while (len(multiplicities) != 0):
+        Multiplicities_output = Multiplicities_output + multiplicities.pop(0) + "_" + systematic + " "
+    Back2ground_script = Back2ground_start + Multiplicities_output
+
+    return Back2ground_script
+
 # run the scripts
-def main():
+def start_jags():
 
     # start with a clean slate
     os.system("clear")
@@ -72,6 +85,9 @@ def main():
 
     # Create the PrepareData script
     prepareDataScript = PrepareData_script_gen(args.data_path, args.data_name, args.mc_path, args.multiplicities, args.systematic)
+
+    # Create the back2ground script
+    back2groundScript = Back2ground_script_gen(args.data_path, args.data_name, args.multiplicities, args.systematic)
     
     os.system(prepareDataScript)
 
@@ -79,5 +95,7 @@ def main():
 
     os.system("jags LaunchJags.cmd")
 
+    os.system(back2groundScript)
 
-main()
+    
+start_jags()
