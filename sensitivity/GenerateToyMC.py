@@ -48,6 +48,7 @@ def hadd_MC(iteration):
 
 def clean_outputs():
     os.system("rm /projects/cuore/simulation/Majoron/sensitivity/*.root")
+    os.system("rm GeneratorScripts/*.cxx")
     
 # Generate N ToyMC
 def Generate_N_sets(number_of_iterations, read_file_array, livetime_factor):

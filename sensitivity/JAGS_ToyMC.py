@@ -65,7 +65,14 @@ def write_batch_script(spectral_index, livetime_dir, queue, iterations):
     qsub_file.write("cp ../../../stash/AlphaBinning-*.txt .\n")
     # The actual job
     qsub_file.write("python3.5 ../../../start_JAGS.py -n %s -d ${JAGS_DATADIR} -D MC_data_${taskID} -m ${JAGS_MCDIR} -M M1 -M M2 -M M2sum -s standard -w ${BOOT_DIR}\n" %(spectral_index)) 
+    qsub_file.write("cp b2g-MC_data_${task_ID}.txt /nfs/cuore1/scratch/cjdavis/MajoronSensitivity/n%s/%s/b2g_files/." %(spectral_index, livetime_dir))
 
+# create the directory where the output b2g files will go. Allows for easily seeing which jobs failed or had other shenanigans
+def create_output_file(spectral_index, livetime_name):
+    # use makedirs because it makes directories in a recursive and safe way (no craziness from \rm -rf *\
+    os.makedirs("/home/nfs/cuore1/scratch/cjdavis/MajoronSensitivity/n%s/%s/b2g_files/" %(spectral_index, livetime_name))
+
+# Start the program
 args = get_args()
 
 write_batch_script(args.index, args.livetime_dir, args.queue, args.iterations)
