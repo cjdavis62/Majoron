@@ -28,7 +28,7 @@ def write_batch_script(spectral_index, livetime_dir, queue, iterations):
     #make the file to be used with pbs
     qsub_file = open("/nfs/cuore1/scratch/cjdavis/MajoronSensitivity/batchScripts/%s_%s.pbs" %(spectral_index, livetime_dir), "w")
     job_name = "n" + str(spectral_index) + "_" + str(livetime_dir)
-    walltime = "12:00:00" #12 hour walltime
+    walltime = "24:00:00" #24 hour walltime, 12 is too short
     
     log_file_dir = "localhost:/nfs/cuore1/scratch/cjdavis/MajoronSensitivity/log/"
     # Write the frontmatter for the PBS job
@@ -65,7 +65,6 @@ def write_batch_script(spectral_index, livetime_dir, queue, iterations):
     qsub_file.write("cp ../../../stash/AlphaBinning-*.txt .\n")
     # The actual job
     qsub_file.write("python3.5 ../../../start_JAGS.py -n %s -d ${JAGS_DATADIR} -D MC_data_${taskID} -m ${JAGS_MCDIR} -M M1 -M M2 -M M2sum -s standard -w ${BOOT_DIR}\n" %(spectral_index)) 
-
 
 args = get_args()
 
