@@ -24,7 +24,7 @@ def get_arguments():
     parser.add_argument("-D", "--data_name", type=str, help="The name of the data file. Do not include the '.root'")
     parser.add_argument("-m", "--mc_path", type=str, help="The path the MC directory")
     parser.add_argument("-w", "--work_dir", type=str, help="The path to the working directory")
-    parser.add_argument("-p", "--setup_path", type=str, help="The path to the setup files, e.g. '/home/cjdavis/JAGS_setup'")
+    #parser.add_argument("-p", "--setup_path", type=str, help="The path to the setup files, e.g. '/home/cjdavis/JAGS_setup'")
     parser.add_argument("-M", "--multiplicities", type=str, action="append", help="The multiplicities to consider, viz. M1, M2, and/or M2sum. Input as '-M M1 -M M2 -M M2sum'")
     parser.add_argument("-s", "--systematic", type=str, help="The name of the systematic, e.g. OddTowers or NoT12")
     args = parser.parse_args()
