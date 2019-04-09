@@ -65,7 +65,7 @@ def PrepareData_script_gen(data_path, data_name, mc_path, multiplicities):
 def Back2ground_script_gen(data_path, data_name, multiplicities):
 
     # Start the back2ground script
-    Back2ground_start = "back2ground_nopress ../{data_path}/{data_name}.root ListMC_opt.txt ".format(data_path=data_path, data_name=data_name)
+    Back2ground_start = "back2ground_nopress {data_path}/{data_name}.root ListMC_opt.txt ".format(data_path=data_path, data_name=data_name)
 
     # multiplicities is mutable, so don't change it
     multiplicities_dummy = []
