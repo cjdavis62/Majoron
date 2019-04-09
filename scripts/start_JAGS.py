@@ -26,7 +26,7 @@ def get_arguments():
     parser.add_argument("-w", "--work_dir", type=str, help="The path to the working directory")
     #parser.add_argument("-p", "--setup_path", type=str, help="The path to the setup files, e.g. '/home/cjdavis/JAGS_setup'")
     parser.add_argument("-M", "--multiplicities", type=str, action="append", help="The multiplicities to consider, viz. M1, M2, and/or M2sum. Input as '-M M1 -M M2 -M M2sum'")
-    parser.add_argument("-s", "--systematic", type=str, help="The name of the systematic, e.g. OddTowers or NoT12")
+    #parser.add_argument("-s", "--systematic", type=str, help="The name of the systematic, e.g. OddTowers or NoT12")
     args = parser.parse_args()
 
     # check that inputs point to existing places
@@ -44,7 +44,7 @@ def get_arguments():
         sys.exit(1)
     return args
 
-def PrepareData_script_gen(data_path, data_name, mc_path, multiplicities, systematic):
+def PrepareData_script_gen(data_path, data_name, mc_path, multiplicities):
 
     # Start the PrepareData script
     PrepareData_start = "PrepareDataMult {data_path}/{data_name}.root ListMC.txt {mc_path} ".format(data_path=data_path, data_name=data_name, mc_path=mc_path)
@@ -57,12 +57,12 @@ def PrepareData_script_gen(data_path, data_name, mc_path, multiplicities, system
     # Add each of the multiplicities
     Multiplicities_output = ""
     while (len(multiplicities_dummy) != 0):
-        Multiplicities_output = Multiplicities_output + multiplicities_dummy.pop(0) + "_" + systematic + " "
+        Multiplicities_output = Multiplicities_output + multiplicities_dummy.pop(0) + " "
     PrepareData_script = PrepareData_start + Multiplicities_output
 
     return PrepareData_script
 
-def Back2ground_script_gen(data_path, data_name, multiplicities, systematic):
+def Back2ground_script_gen(data_path, data_name, multiplicities):
 
     # Start the back2ground script
     Back2ground_start = "back2ground_nopress ../{data_path}/{data_name}.root ListMC_opt.txt ".format(data_path=data_path, data_name=data_name)
@@ -72,10 +72,10 @@ def Back2ground_script_gen(data_path, data_name, multiplicities, systematic):
     for i in multiplicities:
         multiplicities_dummy.append(i)
 
-    # Add each of the multiplicities for SpectraM*_systematic
+    # Add each of the multiplicities for SpectraM*
     Multiplicities_output = ""
     while (len(multiplicities_dummy) != 0):
-        Multiplicities_output = Multiplicities_output + "Spectra" + multiplicities_dummy.pop(0) + "_" + systematic + ".root "
+        Multiplicities_output = Multiplicities_output + "Spectra" + multiplicities_dummy.pop(0) + ".root "
     Back2ground_script = Back2ground_start + Multiplicities_output
 
     return Back2ground_script
@@ -93,10 +93,10 @@ def start_jags():
     os.chdir(args.work_dir)
 
     # Create the PrepareData script
-    prepareDataScript = PrepareData_script_gen(args.data_path, args.data_name, args.mc_path, args.multiplicities, args.systematic)
+    prepareDataScript = PrepareData_script_gen(args.data_path, args.data_name, args.mc_path, args.multiplicities)
 
     # Create the back2ground script
-    back2groundScript = Back2ground_script_gen(args.data_path, args.data_name, args.multiplicities, args.systematic)
+    back2groundScript = Back2ground_script_gen(args.data_path, args.data_name, args.multiplicities)
 
     # For double-checking back2ground script
     print(back2groundScript)
@@ -112,5 +112,4 @@ def start_jags():
 
     os.system(back2groundScript)
 
-    
 start_jags()
